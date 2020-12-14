@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>文章列表</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+
+<div>
+    <form action="http://www.week1.com/admin/article/index" method="get">
+        <div class="form-group">
+            <div class="col-sm-5">
+                <input type="search" class="form-control" id="desc" name="search" value="{$search}">
+                <br>
+                <button type="submit" class="btn btn-primary">搜索</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>
+            全选
+            <input type="checkbox" onclick="CheckAll()" id="CheckAll">
+        </th>
+        <th>文章ID</th>
+        <th>文章标题</th>
+        <th>文章介绍</th>
+        <th>文章封面</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $article as $vo}
+    <tr>
+        <td><input type="checkbox" name="Checkone" id="{$vo.id}" value="{$vo.id}"></td>
+        <td>{$vo.id}</td>
+        <td>{$vo.title}</td>
+        <td>{$vo.desc}</td>
+        <td><img src="{$vo.image}" alt="" width="50px"></td>
+        <td><a href="http://www.week1.com/admin/article/delete/id/{$vo.id}" onclick="return del();">删除</a></td>
+    </tr>
+    {/foreach}
+    </tbody>
+</table>
+
+<div>
+    {$page}
+</div>
+
+</body>
+</html>
+
+
+<script>
+    //1、编写函数，拿到表头的复选框
+    function CheckAll() {
+        var CheckAllEle = document.getElementById("CheckAll");
+        var Flag = CheckAllEle.checked;
+        // 2、获取第一行复选框状态，并进行判断
+        if (Flag == true) {
+            //3拿到下面所有的复选框
+            var checkOnes = document.getElementsByName("Checkone");
+            //4、对所有的复选框进行遍历
+            for (var i = 0; i < checkOnes.length; i++) {
+                //5、将所有的复选框状态置为true
+                checkOnes[i].checked = true;
+            }
+        } else {
+            //6拿到下面所有的复选框
+            var checkOnes = document.getElementsByName("Checkone");
+            //7、对所有的复选框进行遍历
+            for (var i = 0; i < checkOnes.length; i++) {
+                //8、将所有的复选框状态置为true
+                checkOnes[i].checked = false;
+            }
+        }
+    }
+    function del()
+    {
+        if(confirm("确定要删除吗？"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+</script>
